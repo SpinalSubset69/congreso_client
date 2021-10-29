@@ -1,0 +1,11 @@
+.slide{
+    animation: slide 0.3s ease both;
+}
+
+@keyframes slide {
+    from{
+        margin-left: 300px;
+    }to{
+        margin-left: 0px;
+    }
+}
