@@ -1,6 +1,6 @@
 
 const registerButton = document.getElementById("registerButton");
-const baseApi = "https://localhost:5001/api";
+const baseApi = "https://uammbackend.herokuapp.com/api/putstudent";
 
 const StudentRegister = async (e) => {
   e.preventDefault();
@@ -19,7 +19,7 @@ const StudentRegister = async (e) => {
   const endHpur = new Date(`1/1/1990 ${endHourToConvert}`);
 
   //TODO: MAKE DAYS COMPARATOR
-  const day = 29;
+  const day = 01;
   const dateAux = new Date();
   console.log(dateAux.getDate());
   if ((day == dateAux.getDate())) {
@@ -30,7 +30,7 @@ const StudentRegister = async (e) => {
     if (response.statusCode === 200) {
       ShowAlert("success", "Registro Éxitoso!!!");
     } else if (response.statusCode === 500) {
-      ShowAlert("danger", "Ocurrió un Error en la base de datos Éxitoso!!!");
+      ShowAlert("danger", "Ocurrió un Error en la base de datos!!!");
     } else if (response.statusCode === 400) {
       ShowAlert("warning", "Ya te encuentras registrado en esta Actividad");
     }
@@ -67,16 +67,15 @@ const PostRegister = async () => {
   const studentNumber = document.getElementById("studentNumber").value;
   const career = document.getElementById("career").value;
   const activity = document.getElementById("activityName").innerHTML.toString();
-  const IsRegister = true;
   const date = new Date();
-  const RegisterAt = new Date().toLocaleDateString("en-us", {
+  const registerAt = new Date().toLocaleDateString("en-us", {
     weekday: "long",
     year: "numeric",
     month: "short",
     day: "numeric",
   });
-  const Hour = date.getHours() + ":" + date.getMinutes();
-  const Day = RegisterAt.split(',')[0];
+  const hour = date.getHours() + ":" + date.getMinutes();
+  const day = registerAt.split(',')[0];  
   //EndProperties
   
   if(!name || !email || !studentNumber || !career){
@@ -90,14 +89,13 @@ const PostRegister = async () => {
     studentNumber,
     career,
     activity,
-    Hour,
-    Day,
-    RegisterAt,
-    IsRegister
+    hour,
+    day,
+    registerAt
   };
 
-  const post = await fetch(`${baseApi}/estudiante`, {
-    method: "POST",
+  const post = await fetch(`${baseApi}`, {
+    method: "post",
     headers: {
       "Content-Type": "application/json",
     },
