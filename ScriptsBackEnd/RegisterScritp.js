@@ -1,6 +1,7 @@
 
 const registerButton = document.getElementById("registerButton");
-const baseApi = "https://uammbackend.herokuapp.com/api/putstudent";
+const baseApi = "http://localhost:3000/api/putstudent";
+const base = "https://uammbackend.herokuapp.com/api/putstudent";
 
 const StudentRegister = async (e) => {
   e.preventDefault();
@@ -9,6 +10,10 @@ const StudentRegister = async (e) => {
   const hour_split = registerHourElement.split("-");
   const initHourToConvert = hour_split[0];
   const endHourToConvert = hour_split[1].split(" ")[0];
+
+  const dateOfActivity = document.getElementById('dateOfActivity').innerHTML;
+  const dateActivity_split = dateOfActivity.split(' ');
+  const day = dateActivity_split[1];
 
   //Get local hour based on users computer
   const localHourTtConvert = GetLocalHour();
@@ -19,10 +24,10 @@ const StudentRegister = async (e) => {
   const endHpur = new Date(`1/1/1990 ${endHourToConvert}`);
 
   //TODO: MAKE DAYS COMPARATOR
-  const day = 01;
+
   const dateAux = new Date();
-  console.log(dateAux.getDate());
-  if ((day == dateAux.getDate())) {
+
+  if ( (localHour >= initHour && localHour <= endHpur) && (day == dateAux.getDate())) {
     const response = await PostRegister();
     if(response == false){
         return;
